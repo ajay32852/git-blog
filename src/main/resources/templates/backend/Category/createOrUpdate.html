@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      layout:decorate="~{layout/adminmain}">
+<body>
+    
+    <div layout:fragment="content">
+         <!-- start content -->
+            <!--app-content open-->
+            <div class="app-content">
+                <div class="side-app">
+                    <!-- PAGE-HEADER -->
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title" th:text="${title}"></h1>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" th:text="${title}"></a></li>
+                                <li class="breadcrumb-item active" aria-current="page" th:text="${show_title}"></li>
+                            </ol>
+                        </div>
+                        
+                        <div class="ms-auto pageheader-btn">
+                            <a th:href="@{banner}" class="btn btn-primary btn-icon text-white me-2">
+                                <span>
+                                    <i class="fe fe-arrow-left"></i>
+                                </span>Back
+                            </a>
+                        </div>
+                        
+                    </div>
+                    <!-- PAGE-HEADER END -->
+                    <!-- Row -->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            
+                            <form th:method="post" class="card" th:action="@{/cstore}" enctype="multipart/form-data" th:object="${category}"   >
+                                <div class="card-header">
+                                    <h3 class="card-title" th:text="${show_title}"></h3>
+                                </div>
+                                
+                                
+                                <div th:if="${successMessage}" class="alert alert-success">
+                                    <p th:text="${successMessage}"></p>
+                                </div>
+                                <div th:if="${errorMessage}" class="alert alert-danger">
+                                    <p th:text="${errorMessage}"></p>
+                                </div>
+                                
+                                
+                                <div class="card-body ">
+                                    
+                                    <div class="form-group ">
+                                        <label class="form-label">Title<span style="color: red">*</span></label>
+                                        <input type="text" name="title" placeholder="Enter title" class="form form-control">
+                                        <span style="color: red"  th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        <input type="text" name="description" placeholder="Enter description" class="form form-control">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Image<span style="color: red">*</span></label>
+                                        <input type="file" name="files" class="form form-control">
+                                    </div>
+                                    
+                                    
+                                     <div class="form-group">
+                                         <button type="submit" class="btn btn-primary" >Submit</button>
+                                    </div>
+                                    
+                                   
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End Row-->
+                </div>
+            </div>
+            <!-- main-content closed -->         
+         <!-- end content -->
+     </div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      layout:decorate="~{layout/adminmain}">
+<body>
+    <div layout:fragment="content">
+    <!-- start content -->
+     <!--app-content open-->
+            <div class="app-content">
+                <div class="side-app">
+                        <!-- PAGE-HEADER -->
+                        <div class="page-header">
+                                <div>
+                                        <h1 class="page-title" th:text="${title}"></h1>
+                  
+                                </div>
+                                <div class="ms-auto pageheader-btn">
+                                        <a th:href="@{post/create}" class="btn btn-primary btn-icon text-white me-2">
+                                                <span>
+                                                        <i class="fe fe-plus"></i>
+                                                </span> Add Banner
+                                        </a>
+                                </div>
+                        </div>
+                        <!-- PAGE-HEADER END -->
+                        <!-- Row -->
+                        <div class="row row-sm">
+                            
+                        
+                            
+                            
+                        <div class="col-lg-12">
+                                   <div class="card">
+                                       
+                                       
+                         <div class="filter-outer box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title"><span
+                                        class="caption-subject font-green bold uppercase">Search</span></h3>
+
+                            </div>
+                            <div class="box-body">
+                           
+                                <form action="#" th:action="@{/post}" method="get" >
+                                    
+                                <div class="row">
+
+                                    <div class="col-md-5 form-group">
+                                          <input type="text" class="form-control" name="keyword" placeholder="Search by title" th:value="${param.keyword}">
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <select class="form-control" name="status" aria-invalid="false">
+                                               <option value="" selected>Select Status</option>
+                                                <option value="1" th:selected="${param.status == '1'}">Active</option>
+                                                <option value="0" th:selected="${param.status == '0'}">InActive</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <button class="btn btn-success" title="Search" type="submit"><i
+                                                class="fa fa-filter"></i> Search</button>
+                                        <a th:href="@{/post}" class="btn btn-warning"
+                                            title="Reset"><i class="fa  fa-refresh"></i> Reset</a>
+                                    </div>
+                                </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                                       
+                          
+                        <div class="card-header">
+                                <h3 class="card-title" th:text="${show_title}" ></h3>
+                        </div>
+
+                        <div th:if="${successMessage}" class="alert alert-success">
+                            <p th:text="${successMessage}"></p>
+                        </div>
+                        <div th:if="${errorMessage}" class="alert alert-danger">
+                            <p th:text="${errorMessage}"></p>
+                        </div>
+
+                        <div class="card-body">
+                                <div class="table-responsive">
+                                     <div th:if="${!posts.empty}">  
+                                        <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
+                                                <thead>
+                                                        <tr>
+                                                                <th class="wd-15p border-bottom-0">#</th>
+                                                                <th class="wd-15p border-bottom-0"><a th:href="@{/post?page=0&amp;sortBy=title}">Title</a> </th>
+                                                                <th class="wd-20p border-bottom-0"><a th:href="@{/post?page=0&amp;sortBy=description}">Description</a> </th>
+                                                                <th class="wd-10p border-bottom-0">Category</th>
+                                                                <th class="wd-15p border-bottom-0">Banner</th>
+                                                                <th class="wd-10p border-bottom-0">view Banner</th>
+                                                                <th class="wd-10p border-bottom-0">Status</th>
+                        <!--                                                                                <th class="wd-10p border-bottom-0">Status</th>-->
+                        <!--                                                                                <th class="wd-10p border-bottom-0">Created At</th>
+                                                                 <th class="wd-10p border-bottom-0">Updated At</th>-->
+                                                                <th class="wd-25p border-bottom-0">Action</th>
+                                                        </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                         <tr th:each="post: ${posts}">
+                                                                <td th:text="${post.id}"></td>
+                        <!--                                                                                        <td th:text="${post.title}"></td>-->
+                                                                <td><p th:text="${#strings.abbreviate(post.title,30)} "></p></td>
+                                                                <td th:text="${#strings.abbreviate(post.description,30)}"></td>
+                                                                <td th:text="${post.category.title}"></td>
+                                                                <td>
+                                                                      <img  width="40%" th:src="@{${post.post_img_complete}}" th:alt="@{${post.post_img_complete}}">
+                                                                </td>
+                                                                <td>
+                                                                    <a th:href="@{${post.post_img_complete}}">view</a>
+                                                                </td>
+
+                                                                 <td>
+
+                                                                     <span th:classappend="${post.isActive == 1} ? 'badge badge-success' : 'badge badge-danger'">[[${post.isActive == 1} ? 'Active' : 'Inactive']]</span>
+                                                                 </td>
+
+
+
+                                                                  <td class="actions action-btn-tab">
+
+                                                                     <a th:href="@{/admin/business-categories/show/{id}(id=${post.id})}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="View Business Category">
+                                                                         <i class="fa fa-fw fa-eye"></i>
+                                                                     </a>
+
+                                                                     <a th:href="@{/admin/business-categories/edit/{id}(id=${post.id})}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Edit Business Category">
+                                                                         <i class="fa fa-edit"></i>
+                                                                     </a>
+
+                                                                     <a href="javascript:void(0);" class="confirmDeleteBtn btn btn-danger btn-sm" data-toggle="tooltip" th:title="'Delete ' + ${post.title}"
+                                                                         th:data-url="@{/admin/business-categories/destroy/{id}(id=${post.id})}">
+                                                                         <i class="fa fa-trash"></i>
+                                                                     </a>
+
+                                                                 </td> 
+
+
+                                                        </tr>
+
+                                                </tbody>
+
+                                                 <tfoot th:unless="${posts.size() > 0}">
+                                                     <tr>
+                                                         <td colspan='7' align='center'> <strong>Record Not Available</strong> </td>
+                                                     </tr>
+                                                 </tfoot>
+
+                                        </table>
+                                      </div>
+                                </div>
+                        </div>
+                                       
+                                       
+                                   </div>
+                           </div>
+                        </div>
+                        <!-- End Row -->
+
+                </div>
+            </div>
+            <!-- main-content closed -->
+    <!-- end content -->
+     </div>
+</body>
+</html>

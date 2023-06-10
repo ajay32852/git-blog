@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      layout:decorate="~{layout/adminmain}">
+<body>
+    <div layout:fragment="content">
+    <!-- start content -->
+     <!--app-content open-->
+            <div class="app-content">
+                <div class="side-app">
+                        <!-- PAGE-HEADER -->
+                        <div class="page-header">
+                                <div>
+                                        <h1 class="page-title" th:text="${title}"></h1>
+                  
+                                </div>
+                                <div class="ms-auto pageheader-btn">
+                                        <a th:href="@{banner/create}" class="btn btn-primary btn-icon text-white me-2">
+                                                <span>
+                                                        <i class="fe fe-plus"></i>
+                                                </span> Add Banner
+                                        </a>
+                                </div>
+                        </div>
+                        <!-- PAGE-HEADER END -->
+                        <!-- Row -->
+                        <div class="row row-sm">
+                                <div class="col-lg-12">
+                                        <div class="card">
+                                                <div class="card-header">
+                                                        <h3 class="card-title" th:text="${show_title}" ></h3>
+                                                </div>
+                                            
+                                                <div th:if="${successMessage}" class="alert alert-success">
+                                                    <p th:text="${successMessage}"></p>
+                                                </div>
+                                                <div th:if="${errorMessage}" class="alert alert-danger">
+                                                    <p th:text="${errorMessage}"></p>
+                                                </div>
+                                            
+                                                <div class="card-body">
+                                                        <div class="table-responsive">
+                                                             <div th:if="${!banners.empty}">  
+                                                                <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
+                                                                        <thead>
+                                                                                <tr>
+                                                                                        <th class="wd-15p border-bottom-0">#</th>
+                                                                                        <th class="wd-15p border-bottom-0">Title</th>
+                                                                                        <th class="wd-20p border-bottom-0">Description</th>
+                                                                                        <th class="wd-15p border-bottom-0">Banner</th>
+                                                                                        <th class="wd-10p border-bottom-0">view Banner</th>
+<!--                                                                                        <th class="wd-10p border-bottom-0">Status</th>-->
+<!--                                                                                        <th class="wd-10p border-bottom-0">Created At</th>
+                                                                                        <th class="wd-10p border-bottom-0">Updated At</th>-->
+                                                                                        <th class="wd-25p border-bottom-0">Action</th>
+                                                                                </tr>
+                                                                        </thead>
+                                                                        
+                                                                        <tbody>
+                                                                                 <tr th:each="banner: ${banners}">
+                                                                                        <td th:text="${banner.id}"></td>
+                                                                                        <td th:text="${banner.title}"></td>
+                                                                                        <td th:text="${banner.description}"></td>
+                                                                                        <td>
+                                                                                              <img  width="50%" th:src="@{'/uploads/' + ${banner.image}}" th:alt="${banner.image}">
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <a th:href="@{banner.image_url}">view</a>
+                                                                                        </td>
+                                                                                        
+<!--                                                                                        <td>
+                                                                                        <div th:if="${banner.is_active}">
+                                                                                        <p>User is active</p>
+                                                                                        </div>
+                                                                                        <div th:else>
+                                                                                            <p>User is not active</p>
+                                                                                        </div>
+                                                                                        </td>-->
+                                                                                        
+<!--                                                                                         <td th:text="${banner.created_at}"></td>
+                                                                                         <td th:text="${banner.updated_at}"></td>-->
+                                                                                     <td>
+                                                                                         <button class="btn btn-danger">
+                                                                                             <a th:href="@{banner/delete/3}"><i class="fa fa-trash"></i></a>
+                                                                                         </button>
+                                                                                         
+                                                                                          <button class="btn btn-primary">
+                                                                                             <a th:href="@{banner/show/3}"><i class="fa fa-image"></i></a>
+                                                                                         </button>
+                                                                                      </td>
+                                                                                        
+                                                                                </tr>
+                                                                              
+                                                                        </tbody>
+                                                                        
+                                                                </table>
+                                                              </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- End Row -->
+
+                </div>
+            </div>
+            <!-- main-content closed -->
+    <!-- end content -->
+     </div>
+</body>
+</html>
