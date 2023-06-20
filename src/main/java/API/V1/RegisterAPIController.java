@@ -50,8 +50,6 @@ public class RegisterAPIController {
         
     }
    
-  
-    
     private List<String> getAllValidationErrors(BindingResult result)
     {
         List<String> errors=new ArrayList<>();
